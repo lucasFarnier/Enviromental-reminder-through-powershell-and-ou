@@ -14,14 +14,12 @@ foreach ($computer in $computers)
 
         $msgProcess = Start-Process -FilePath "msg" -ArgumentList "/Server:$pcName * $ms" -PassThru
         
-        # Wait for the msg process to exit with a timeout
-        $msgProcess.WaitForExit($timeout * 100)  # Timeout in milliseconds
+        $msgProcess.WaitForExit($timeout * 100) 
         
-        # If the process did not exit within the timeout
         if (!$msgProcess.HasExited)
         {
             Write-Output "Timeout reached while trying to contact $($pcName), skipping..."
-            $msgProcess.Kill()  # Kill the process if it hasn't finished
+            $msgProcess.Kill()
         }
     }
     catch
